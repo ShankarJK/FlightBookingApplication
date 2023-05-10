@@ -1,0 +1,116 @@
+@startuml PassengerBO-ClassDiagram
+
+!define POSITIVERESPONSE 90EE90
+
+!define NEGATIVEERESPONSE EFBBBB
+
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title PassengerBO - ClassDiagram
+
+package BOs{
+    package PassengerBO{
+        class PassengerBO{
+            +bookingid: String
+            +passengerName : String
+            +flightNumber : String
+            +bookedDate : DateTime
+
+        }
+        class PassengerBOExtension{
+            +sortBookingsByDate(ListofBookings: List<PassengerBO> ): List<PassengerBO>
+            +checkRemainingDays():int
+        }
+    }
+}
+
+package Services{
+    package FlightBookingService{
+        interface IFlightBookingService{
+            +bookTickets(passenger : PassengerBO): Future<ServiceResult<bool>>
+            +fetchBookingDetails(): Future<ServiceResult<List<PassengerBO>>>
+        }
+    }
+}
+
+package Pages{
+    package BookingScreen{
+        class BookingScreenVM{
+            +bookFlightTicktes(): Future<void>
+        }
+    }
+    package MyBookingScreen{
+        class MyBookingScreenVM{
+            +fetchbookings() : Future<void>
+            +sortBookings() : void
+            +numberOfDaysChecker() : void
+        }
+    }
+}
+
+package Helpers{
+    package Utilites{
+        class Utilites{
+            +returnRemainingDays() : int
+        }
+    }
+}
+
+
+PassengerBOExtension --> PassengerBO
+PassengerBOExtension --> Utilites
+PassengerBO <-- BookingScreenVM
+PassengerBO <-- MyBookingScreenVM
+PassengerBO <-- IFlightBookingService
+PassengerBO <-- Utilites
+
+
+newpage
+
+package BOs{
+    package PassengerBO{
+        class PassengerBOExtension{
+            +sortBookingsByDate(ListofBookings: List<PassengerBO>) : List<PassengerBO>
+        }
+    }
+}
+
+package MyBookingScreen{
+    class MyBookingScreenVM{
+        +sortBookings() : void
+    }
+}
+
+MyBookingScreenVM --> PassengerBOExtension
+
+
+
+newpage
+
+package BOs{
+    package PassengerBO{
+        class PassengerBOExtension{
+            +checkRemainingDays():int
+        }
+    }
+}
+
+package MyBookingScreen{
+    class MyBookingScreenVM{
+        +numberOfDaysChecker() : void
+    }
+}
+
+MyBookingScreenVM --> PassengerBOExtension
+
+@enduml

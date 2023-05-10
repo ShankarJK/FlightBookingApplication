@@ -1,0 +1,43 @@
+@startuml ClassDiagram
+
+!define POSITIVERESPONSE 90EE90
+
+!define NEGATIVEERESPONSE EFBBBB
+
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title "HomeScreen-ClassDiagram"
+
+package Pages{
+    package HomeScreen{
+        class HomeScreenModel{
+
+        }
+        class HomeScreenVM{
+            +onClickingbookNow(): void
+            +onClickingmyBookings(): void
+        }
+        class HomeScreen{
+            - _instanceOfVM : HomeScreenVM
+            + initState() : void
+            + dispose() : void
+        }
+    }
+}
+
+HomeScreenVM --> HomeScreenModel :extends
+HomeScreen --> HomeScreenVM :uses
+
+
+
+

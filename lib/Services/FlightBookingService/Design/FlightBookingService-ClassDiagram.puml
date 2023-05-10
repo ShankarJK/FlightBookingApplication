@@ -1,0 +1,81 @@
+@startuml PassengerBO-ClassDiagram
+
+!define POSITIVERESPONSE 90EE90
+
+!define NEGATIVEERESPONSE EFBBBB
+
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title FlightBookingService - ClassDiagram
+
+package Services{
+    package FlightBookingService{
+        interface IFlightBookingService{
+            +bookTickets(passenger : PassengerBO): Future<ServiceResult<bool>>
+            +fetchBookingDetails(): Future<ServiceResult<List<PassengerBO>>>
+        }
+    }
+}
+
+package BOs{
+    package PassengerBO{
+        class PassengerBO{
+
+        }
+    }
+}
+
+IFlightBookingService --> PassengerBO
+
+newpage
+
+package Services{
+    package FlightBookingService{
+        interface IFlightBookingService{
+            +bookTickets(passenger : PassengerBO): Future<ServiceResult<bool>>
+        }
+    }
+}
+
+package Pages{
+    package BookingScreen{
+        class BookingScreenVM{
+            +bookFlightTicktes(): Future<void>
+        }
+    }
+}
+
+BookingScreenVM --> IFlightBookingService
+
+
+newpage
+
+package Services{
+    package FlightBookingService{
+        interface IFlightBookingService{
+            +fetchBookingDetails(): Future<ServiceResult<List<PassengerBO>>>
+        }
+    }
+}
+
+package Pages{
+   package MyBookingScreen{
+        class MyBookingScreenVM{
+            +fetchbookings() : Future<void>
+        }
+    }
+}
+
+MyBookingScreenVM --> IFlightBookingService
+
+@enduml

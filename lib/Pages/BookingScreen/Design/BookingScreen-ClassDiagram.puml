@@ -1,0 +1,72 @@
+@startuml UserBO-ClassDiagram
+
+!define POSITIVERESPONSE 90EE90
+
+!define NEGATIVEERESPONSE EFBBBB
+
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title "BookingScreen-ClassDiagram"
+
+package Pages{
+    package BookingScreen{
+        class BookingScreenModel{
+            +flightBookingService : IFlightBookingService
+            +@passengerName :String
+            +@flightNumber :String
+            +@bookingDate: DateTime
+            +@pageTitle: String
+            +@statusCode : int
+            +@isLoading : Bool
+        }
+        class BookingScreenVM{
+            +Constructor(): void
+            +onPassengerNameChanged(passengerName :String): void
+            +onFlightNumberChanged(flightNumber :String): void
+            +onBookingDateChanged(bookingDate: DateTime) : void
+            +onPassengerNameChanged(passengerName :String): void
+            +goBackToHome(): void
+            +bookFlightTicktes(): Future<void>
+        }
+        class BookingScreen{
+            - _instanceOfVM : BookingScreenVM
+            + initState() : void
+            + dispose() : void
+        }
+    }
+}
+
+BookingScreenVM --> BookingScreenModel :extends
+BookingScreen --> BookingScreenVM :uses
+
+
+package BOs{
+    package PassengerBO{
+        class PassengerBO{
+
+        }
+
+    }
+}
+
+package Services{
+    package FlightBookingService{
+        interface IFlightBookingService{
+            +bookTickets(passenger : PassengerBO): Future<ServiceResult<bool>>
+        }
+    }
+}
+
+BookingScreenVM --> PassengerBO:uses
+BookingScreenVM --> IFlightBookingService: uses
+
